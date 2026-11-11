@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1020">
+<title>바이브 코딩 첫걸음 | 게임을 만드는 마법 같은 설명</title>
+<style>
+:root{--bg:#0c1020;--bg2:#10152a;--panel:#19203a;--panel2:#222c4c;--ink:#f6f9ff;--muted:#b5c0d7;--accent:#9af7d7;--accent2:#b5a7ff;--yellow:#ffd782;--red:#ff9eaa;--line:rgba(203,220,255,.18)}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:Pretendard,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}body{overflow:hidden}
+button{font:inherit}button:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.deck{position:relative;height:100dvh;min-height:550px;background:radial-gradient(circle at 85% 12%,rgba(115,91,215,.22),transparent 32%),radial-gradient(circle at 10% 90%,rgba(37,202,163,.13),transparent 42%),var(--bg);overflow:hidden}
+.deck:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(203,228,255,.12) 1px,transparent 1px);background-size:27px 27px;opacity:.34;pointer-events:none}
+.slide{display:none;position:absolute;inset:0;overflow-y:auto;padding:clamp(18px,3.3vw,52px) clamp(24px,5.1vw,84px) 106px;scrollbar-color:#485577 transparent}
+.slide.active{display:block;animation:appear .22s ease-out}@keyframes appear{from{opacity:.1;transform:translateX(10px)}to{opacity:1;transform:none}}
+.slide-inner{position:relative;z-index:1;max-width:1440px;min-height:calc(100% - 25px);margin:0 auto;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-size:clamp(14px,1.4vw,20px);margin-bottom:18px}
+h1,h2,h3,p{margin-top:0}h1{font-size:clamp(54px,7.4vw,118px);line-height:1.06;letter-spacing:-.065em;margin-bottom:24px}h2{font-size:clamp(38px,4.5vw,72px);line-height:1.14;letter-spacing:-.048em;margin-bottom:22px}h3{font-size:clamp(25px,2.3vw,38px);line-height:1.25;letter-spacing:-.035em;margin-bottom:12px}p,.body{font-size:clamp(21px,2.05vw,31px);line-height:1.5;color:var(--muted)}.lead{font-size:clamp(25px,2.5vw,39px);line-height:1.45;color:#e5eeff;max-width:1120px}.accent{color:var(--accent)}.purple{color:var(--accent2)}.gold{color:var(--yellow)}.red{color:var(--red)}strong{color:#fff}
+.row{display:flex;gap:22px;align-items:stretch}.row>*{flex:1;min-width:0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:23px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}
+.card{border:1px solid var(--line);background:rgba(25,32,58,.88);border-radius:26px;padding:clamp(20px,2.6vw,34px);box-shadow:0 16px 44px rgba(0,0,0,.12)}.card p{margin-bottom:0}.card.em{border:2px solid rgba(154,247,215,.45);background:linear-gradient(135deg,rgba(31,73,76,.5),rgba(25,32,58,.9))}.card.purple-card{border-color:rgba(181,167,255,.44)}.chip{display:inline-flex;align-items:center;gap:6px;border-radius:100px;padding:7px 14px;background:rgba(181,167,255,.14);color:#e4ddff;border:1px solid rgba(181,167,255,.22);font-size:clamp(14px,1.2vw,19px);font-weight:800}.chip.green{color:var(--accent);background:rgba(154,247,215,.1);border-color:rgba(154,247,215,.25)}.iconbig{font-size:clamp(43px,4.2vw,67px);margin-bottom:20px}.small{font-size:clamp(17px,1.6vw,24px);line-height:1.45}.tiny{font-size:clamp(15px,1.2vw,19px);line-height:1.45}.muted{color:var(--muted)}
+.tagline{display:inline-block;border:1px solid rgba(154,247,215,.45);border-radius:100px;color:var(--accent);padding:11px 20px;background:rgba(154,247,215,.08);font-size:clamp(18px,1.5vw,23px);font-weight:800;margin:14px 0 24px}.giant{font-size:clamp(95px,13vw,220px);font-weight:1000;letter-spacing:-.075em;line-height:1;color:var(--accent);text-shadow:0 0 52px rgba(154,247,215,.16)}.big-arrow{font-size:50px;color:var(--accent)}
+.prompt{position:relative;white-space:pre-wrap;font-family:inherit;font-size:clamp(20px,1.8vw,29px);line-height:1.6;color:#f0f7ff;background:#0e172c;border:1px solid rgba(154,247,215,.34);border-radius:20px;padding:24px 26px;margin:0;overflow-wrap:anywhere}.prompt.smallprompt{font-size:clamp(18px,1.4vw,23px)}.prompt-label{font-size:clamp(16px,1.3vw,20px);color:var(--accent);font-weight:900;margin-bottom:10px}.copy{border:1px solid rgba(154,247,215,.4);background:rgba(154,247,215,.15);color:#dffff4;padding:11px 19px;border-radius:12px;font-weight:900;font-size:clamp(15px,1.15vw,18px);cursor:pointer;white-space:nowrap}.copy:hover{background:rgba(154,247,215,.25)}.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.copy-block{min-width:0}
+.stepnum{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;background:var(--accent);color:#082a22;font-size:31px;font-weight:1000;margin-bottom:16px}
+.timeline{display:flex;align-items:stretch;gap:16px;margin-top:20px}.timeline .card{flex:1}.timeline-arrow{align-self:center;font-size:37px;color:var(--accent)}
+.hint{border-left:5px solid var(--yellow);padding:13px 20px;background:rgba(255,215,130,.07);color:#fce7be;border-radius:0 16px 16px 0;font-size:clamp(19px,1.65vw,25px);line-height:1.5;margin-top:22px}.check{display:flex;align-items:start;gap:14px;font-size:clamp(22px,2vw,30px);margin:14px 0}.check b{color:var(--accent);font-weight:950}
+.bar-top{position:absolute;top:0;left:0;right:0;height:5px;background:rgba(255,255,255,.1);z-index:12}.bar-fill{height:100%;width:8.33%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .22s}
+.nav{position:absolute;bottom:0;left:0;right:0;z-index:13;min-height:75px;padding:10px clamp(20px,5.2vw,80px);display:flex;align-items:center;gap:15px;border-top:1px solid var(--line);background:rgba(9,13,27,.95);backdrop-filter:blur(13px)}.nav .brand{font-size:clamp(14px,1.1vw,18px);font-weight:900;color:var(--muted)}.nav .counter{color:#fff;font-weight:900;font-size:20px;font-variant-numeric:tabular-nums;margin:0 10px}.nav .spacer{flex:1}.nav button{font-size:clamp(15px,1.25vw,20px);border-radius:13px;min-height:49px;padding:9px 20px;background:#232c48;color:#f4f7ff;border:1px solid #424b67;font-weight:800;cursor:pointer}.nav button.primary{background:var(--accent);color:#09221e;border-color:var(--accent)}.nav button:hover{filter:brightness(1.11)}.nav button:disabled{opacity:.27;cursor:default}.nav .mini{padding:9px 12px}
+.notes-box{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.notes-box .card{padding:20px}.notes-box .prompt{font-size:clamp(18px,1.35vw,22px);line-height:1.5;padding:18px}.split-60{display:grid;grid-template-columns:1.15fr 1fr;gap:25px;align-items:start}.split-50{display:grid;grid-template-columns:1fr 1fr;gap:23px;align-items:start}.message{padding:17px 22px;border-radius:15px;font-size:clamp(22px,2.1vw,32px);font-weight:800;line-height:1.5}.badmsg{background:#422536;border:1px solid rgba(255,158,170,.45);color:#ffc9d0}.goodmsg{background:#18443d;border:1px solid rgba(154,247,215,.42);color:#d0fff0}.code-symbols{background:#131b2f;border-radius:22px;border:1px solid var(--line);padding:24px 30px;font-family:Consolas,Monaco,monospace;font-size:clamp(18px,1.7vw,26px);line-height:1.65;color:#aebdff;word-break:break-all;white-space:pre-wrap}
+.demo{background:rgba(13,18,35,.96);border:1px solid rgba(181,167,255,.33);border-radius:23px;padding:21px;min-width:0}.demo-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}.demo-title{font-weight:950;font-size:clamp(22px,2vw,31px)}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:13px}.stat{border:1px solid #354361;background:#1a2540;border-radius:14px;padding:12px;text-align:center}.stat strong{display:block;color:var(--accent);font-size:clamp(23px,2.4vw,34px);line-height:1.2;font-variant-numeric:tabular-nums}.stat span{display:block;color:#c3cfe1;font-size:clamp(13px,1vw,17px);margin-top:6px;font-weight:800}.game-btn{display:inline-grid;place-items:center;background:var(--accent);border:0;border-radius:13px;min-height:51px;padding:10px 22px;color:#0a3028;font-weight:1000;font-size:clamp(18px,1.4vw,22px);cursor:pointer}.game-btn:disabled{opacity:.5;cursor:default}.game-btn.secondary{background:#303d62;color:white}.game-status{font-size:clamp(16px,1.4vw,22px);color:#d7dff0;min-height:26px;margin:11px 0}.reaction-area{height:clamp(188px,23vh,270px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:11px;border:2px solid #45516d;background:#212c49;border-radius:18px;user-select:none;cursor:pointer;touch-action:manipulation;text-align:center;padding:16px}.reaction-area.waiting{background:#9a4052;border-color:#fa8a9e}.reaction-area.ready{background:#168869;border-color:#a4ffdf}.reaction-area.hit{background:#344267;border-color:#99acff}.reaction-area .signal{font-size:clamp(28px,2.6vw,40px);font-weight:1000;line-height:1.15}.reaction-area .signal-sub{font-size:clamp(16px,1.2vw,21px);color:#eff6ff}.trial-list{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}.trial{border-radius:10px;border:1px solid #3d4b6a;background:#17233b;font-weight:800;padding:6px 11px;color:#e6eef8;font-size:clamp(14px,1.05vw,17px)}
+.aim-area{position:relative;height:clamp(220px,32vh,340px);border-radius:18px;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),#121c31;background-size:28px 28px;border:2px solid #445374;overflow:hidden;cursor:crosshair;touch-action:manipulation;user-select:none}.target{width:76px;height:76px;border:5px solid #fff;position:absolute;border-radius:50%;background:#ff778d;box-shadow:0 0 0 8px rgba(255,119,141,.15),0 0 26px rgba(255,119,141,.4);display:none;align-items:center;justify-content:center;cursor:crosshair;touch-action:manipulation;transform:none}.target:before{content:"";width:34px;height:34px;background:#fff;border-radius:100px}.target:after{content:"";position:absolute;width:10px;height:10px;background:#f05c7e;border-radius:100px}.aim-overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:rgba(12,20,37,.52);padding:20px;font-size:clamp(21px,1.9vw,31px);font-weight:950;line-height:1.5;pointer-events:none}.aim-hud{display:flex;justify-content:space-between;margin:13px 0;gap:9px;align-items:center}.aim-hud .game-status{margin:0;text-align:right}
+.marquee{display:inline-block;padding:11px 17px;border-radius:13px;background:rgba(255,215,130,.11);border:1px solid rgba(255,215,130,.3);font-weight:900;color:#ffecbb;font-size:clamp(18px,1.4vw,22px)}
+.toc-panel{display:none;position:absolute;z-index:20;inset:5px 0 75px;overflow:auto;padding:35px max(25px,10vw);background:rgba(10,15,31,.98)}.toc-panel.open{display:block}.toc-panel h2{font-size:45px}.toc-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.toc-list button{background:#1b2743;border:1px solid #3c4b69;border-radius:15px;padding:19px;color:#fff;font-weight:800;font-size:22px;text-align:left;cursor:pointer}.toc-list button:hover{background:#314364}.toc-list button span{display:block;color:var(--accent);font-size:17px;margin-bottom:8px}
+.bottomnote{font-size:clamp(16px,1.3vw,19px);color:#a5b1c8;margin-top:19px}.cover-art{position:absolute;right:2%;top:19%;font-size:clamp(140px,17vw,280px);transform:rotate(-10deg);opacity:.23;filter:drop-shadow(0 0 50px #aaf7d7)}
+@media (max-width:1050px){.grid4{grid-template-columns:repeat(2,1fr)}.split-60,.split-50{grid-template-columns:1fr}.grid2{grid-template-columns:1fr 1fr}.slide-inner{justify-content:flex-start}.timeline-arrow{display:none}.timeline{flex-direction:column}}
+@media (max-width:700px){.deck{min-height:0}.slide{padding:27px 18px 106px}.slide-inner{min-height:initial}.grid2,.grid3,.grid4,.split-60,.split-50,.notes-box{grid-template-columns:1fr}.card{border-radius:19px;padding:18px}.grid2,.grid3,.grid4{gap:12px}.row{flex-direction:column}.nav{padding:8px 12px;gap:7px;min-height:72px}.nav .brand{display:none}.nav button{padding:9px 12px;min-height:46px}.nav .counter{font-size:17px;margin:0}.nav .mini{padding:9px 10px}h2{font-size:clamp(34px,8vw,49px)}p,.body{font-size:21px}.lead{font-size:24px}.prompt{font-size:18px}.toc-list{grid-template-columns:1fr}.cover-art{top:43%;right:0}.aim-area{height:260px}.reaction-area{height:220px}.timeline{gap:10px}}
+@media (max-height:660px) and (min-width:1000px){.slide{padding-top:21px;padding-bottom:85px}h2{font-size:clamp(35px,4vw,55px)}.card{padding:19px}.eyebrow{margin-bottom:11px}.slide h2{margin-bottom:13px}.slide p{line-height:1.4}.nav{min-height:64px}.reaction-area{height:190px}.aim-area{height:210px}}
+
+@media (min-width:1000px) and (max-height:800px){
+.slide{padding-top:20px;padding-bottom:82px}
+.slide h2{font-size:clamp(39px,4vw,58px);margin-bottom:14px}
+.slide .lead{font-size:clamp(23px,2.1vw,32px);line-height:1.35;margin-bottom:13px}
+.slide .card{padding:18px}
+.slide h3{font-size:clamp(23px,2vw,32px);margin-bottom:9px}
+.slide .card p{font-size:clamp(18px,1.7vw,25px);line-height:1.38}
+.slide .grid2,.slide .grid3,.slide .grid4{gap:14px}
+.slide .iconbig{font-size:45px;margin-bottom:10px}
+.slide .hint{margin-top:12px;padding:11px 15px;font-size:20px}
+.slide .check{font-size:clamp(20px,1.8vw,26px);margin:9px 0}
+.slide .stepnum{width:45px;height:45px;font-size:25px;margin-bottom:11px}
+.slide .eyebrow{margin-bottom:10px}
+}
+
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+</style>
+</head>
+<body>
+<main class="deck" id="deck">
+  <div class="bar-top"><div class="bar-fill" id="progress"></div></div>
+  <section class="slide active" data-title="코딩은 너무 어려워!">
+    <div class="slide-inner">
+      <span class="eyebrow">AI × 만들기 × 상상력 · 초등학교 6학년</span>
+      <h1>코딩은<br><span class="red">너무 어렵다?</span></h1>
+      <p class="lead">코드를 하나하나 외우지 않아도<br><strong>내가 원하는 게임과 프로그램을</strong> 만들 수 있을까?</p>
+      <div><span class="tagline">오늘은 <b>바이브 코딩(Vibe Coding)</b>에 도전!</span></div>
+      <div class="cover-art" aria-hidden="true">🎮</div>
+      <div class="hint" style="max-width:850px">수업 미션: 게임 2개를 체험하고, AI에게 정확한 제작 요청을 해보자.</div>
+    </div>
+  </section>
+  <section class="slide" data-title="코딩이 어렵게 느껴지는 이유">
+    <div class="slide-inner">
+      <div class="eyebrow">01 · 왜 어려울까?</div>
+      <h2>예전에는 <span class="red">코드 문법</span>부터 배웠어.</h2>
+      <div class="grid2">
+        <div class="card"><span class="chip">우리가 떠올린 생각</span><div class="message goodmsg" style="margin-top:17px">“버튼을 누르면<br>점수가 1점 올라가게 해줘!”</div><p style="margin-top:18px">우리가 원하는 건 <strong>작동하는 기능</strong>이야.</p></div>
+        <div class="card"><span class="chip">직접 코딩하는 예시</span><div class="code-symbols" style="margin-top:17px">let score = 0;<br>button.onclick = () =&gt; {<br>&nbsp; score = score + 1;<br>&nbsp; display.textContent = score;<br>};</div><p style="margin-top:16px">컴퓨터가 이해할 <strong>코드의 규칙</strong>을 알아야 해.</p></div>
+      </div>
+      <p class="bottomnote">직접 코딩도 중요하지만, 오늘은 AI의 도움을 받아 시작해 볼 거야.</p>
+    </div>
+  </section>
+  <section class="slide" data-title="바이브 코딩이란?">
+    <div class="slide-inner">
+      <div class="eyebrow">02 · 바이브 코딩의 뜻</div>
+      <h2>원하는 <span class="accent">느낌</span>을 설명해 봐!</h2>
+      <p class="lead"><strong>바이브(Vibe)</strong>는 분위기나 느낌이라는 뜻.<br>사람이 원하는 기능·분위기를 말하면 <strong>AI가 코드를 만드는 방식</strong>이야.</p>
+      <div class="timeline">
+        <div class="card em"><div class="stepnum">1</div><h3>내가 설명한다</h3><p>“30초 동안 표적을 누르는 게임을 만들어 줘.”</p></div>
+        <div class="timeline-arrow">➜</div>
+        <div class="card purple-card"><div class="stepnum" style="background:var(--accent2)">2</div><h3>AI가 코드를 만든다</h3><p>HTML·CSS·JavaScript 코드로 기능을 구현해.</p></div>
+        <div class="timeline-arrow">➜</div>
+        <div class="card"><div class="stepnum" style="background:var(--yellow)">3</div><h3>실행하고 고친다</h3><p>직접 눌러 보고 부족한 점을 다시 설명해.</p></div>
+      </div>
+      <div class="hint">핵심! <strong>AI는 한 번에 완벽하지 않을 수도 있어.</strong> 사람이 직접 실행하고 확인해야 해.</div>
+    </div>
+  </section>
+  <section class="slide" data-title="어떤 걸 만들어 볼까?">
+    <div class="slide-inner">
+      <div class="eyebrow">03 · 우리가 즐기는 디지털 세상</div>
+      <h2>요즘 우리는 이런 걸 즐기지?</h2>
+      <div class="grid3">
+        <div class="card"><div class="iconbig">🎬</div><h3>영상</h3><p>영상 편집 도구, 자막 생성기, 영상 소개 페이지</p></div>
+        <div class="card"><div class="iconbig">🎵</div><h3>음악</h3><p>나만의 플레이리스트, 박자 맞추기 게임</p></div>
+        <div class="card em"><div class="iconbig">🎮</div><h3>게임</h3><p>반응속도 테스트, 에임 훈련, 두더지 잡기</p></div>
+      </div>
+      <p class="lead" style="margin-top:22px">오늘은 복잡한 설치가 필요 없는 <span class="accent">웹 게임(HTML)</span>부터 만들어 보자!</p>
+    </div>
+  </section>
+  <section class="slide" data-title="프롬프트의 공식">
+    <div class="slide-inner">
+      <div class="eyebrow">04 · AI에게 부탁하는 방법</div>
+      <h2>프롬프트는 <span class="accent">제작 설명서</span>야.</h2>
+      <p class="lead">AI에게 입력하는 요청 문장을 <strong>프롬프트(Prompt)</strong>라고 해.</p>
+      <div class="grid4">
+        <div class="card"><span class="chip green">① 종류</span><h3 style="margin-top:15px">무엇을?</h3><p>“반응속도 게임을”</p></div>
+        <div class="card"><span class="chip green">② 규칙</span><h3 style="margin-top:15px">어떻게?</h3><p>“초록색이 되면 클릭”</p></div>
+        <div class="card"><span class="chip green">③ 숫자</span><h3 style="margin-top:15px">얼마나?</h3><p>“5회, 평균과 최고기록”</p></div>
+        <div class="card"><span class="chip green">④ 화면·환경</span><h3 style="margin-top:15px">어떤 모습?</h3><p>“큰 버튼, 스마트폰에서도”</p></div>
+      </div>
+      <div class="hint"><strong>결과물 형식</strong>도 알려주자. “HTML 파일 하나로 만들어 줘.”</div>
+    </div>
+  </section>
+  <section class="slide" data-title="간결하고 명확하게">
+    <div class="slide-inner">
+      <div class="eyebrow">05 · 좋은 프롬프트 만드는 법</div>
+      <h2>짧더라도 <span class="accent">구체적으로!</span></h2>
+      <div class="grid2">
+        <div class="card"><div class="chip" style="color:#ffd0d5;border-color:#b96a77;background:#4d2839">🙅 아쉬운 프롬프트</div><div class="message badmsg" style="margin-top:20px">“재밌고 멋진 게임 하나 만들어 줘.”</div><p style="margin-top:15px">어떤 게임인지, 어떻게 하는지 알기 어려워.</p></div>
+        <div class="card em"><div class="chip green">🙆 좋은 프롬프트</div><div class="message goodmsg" style="margin-top:20px">“30초 동안 동그란 표적을 클릭하는 게임을 만들어 줘. 점수는 1점씩 오르고, 표적 크기는 80px로 해 줘.”</div><p style="margin-top:15px">동작과 숫자가 있어 AI가 이해하기 쉬워.</p></div>
+      </div>
+      <div class="check"><b>✓</b><span>하나의 문장에 모든 내용을 우겨넣기보다 <strong>문장을 끊어 설명하기</strong></span></div>
+      <div class="check"><b>✓</b><span>시간·횟수·크기·점수 등 <strong>숫자로 조건 표현하기</strong></span></div>
+      <div class="check"><b>✓</b><span><strong>스마트폰과 크롬북에서도</strong> 작동해 달라고 요청하기</span></div>
+    </div>
+  </section>
+  <section class="slide" data-title="한 번에 다 말하지 않아도 돼">
+    <div class="slide-inner">
+      <div class="eyebrow">06 · 프롬프트로 조금씩 고치기</div>
+      <h2>처음부터 완벽할 필요 없어.</h2>
+      <p class="lead">큰 요청 한 번보다 <strong>만들기 → 실행 → 수정하기</strong>를 반복하자.</p>
+      <div class="notes-box">
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">첫 요청</span><button class="copy" data-copy="0">복사</button></div><div class="prompt smallprompt" data-prompt="0">클릭하면 점수가 1점씩 올라가는 간단한 웹 게임을 만들어 줘. HTML 파일 하나로 작성해 줘.</div></div>
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">첫 번째 수정</span><button class="copy" data-copy="1">복사</button></div><div class="prompt smallprompt" data-prompt="1">게임 시간을 30초로 제한하고, 남은 시간을 화면 위에 크게 표시해 줘.</div></div>
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">두 번째 수정</span><button class="copy" data-copy="2">복사</button></div><div class="prompt smallprompt" data-prompt="2">스마트폰에서도 손가락으로 누를 수 있게 하고, 게임 종료 후 다시 시작 버튼을 만들어 줘.</div></div>
+      </div>
+    </div>
+  </section>
+  <section class="slide" data-title="주제가 바뀌면 새 대화">
+    <div class="slide-inner">
+      <div class="eyebrow">07 · AI와 대화하는 요령</div>
+      <h2><span class="gold">주제</span>가 바뀌면 새 대화를 열자.</h2>
+      <p class="lead">AI가 앞에서 만들던 내용을 계속 참고해서 <strong>새 요청을 엉뚱하게 해석</strong>할 수 있어.</p>
+      <div class="grid2">
+        <div class="card em"><div class="iconbig">🔧</div><h3>같은 게임을 수정한다면?</h3><p><strong>기존 대화에서 계속!</strong></p><div class="message goodmsg small" style="margin-top:12px">“방금 만든 반응속도 게임에 평균 기록도 넣어 줘.”</div></div>
+        <div class="card purple-card"><div class="iconbig">🆕</div><h3>전혀 다른 걸 만든다면?</h3><p><strong>새 대화를 시작!</strong></p><div class="message goodmsg small" style="margin-top:12px">“이제 가계부 프로그램을 새로 만들 거야.”</div></div>
+      </div>
+      <div class="hint">새 대화에서 기존 프로젝트를 이어야 한다면, 이전 코드와 필요한 조건을 다시 전달해 줘.</div>
+    </div>
+  </section>
+  <section class="slide" data-title="게임 1 · 반응속도 테스트">
+    <div class="slide-inner">
+      <div class="eyebrow">08 · 직접 체험 · 게임 예시 1</div>
+      <h2>⚡ 반응속도 테스트 <span class="accent">5회</span></h2>
+      <div class="split-50">
+        <div class="copy-block">
+          <div class="prompt-head"><span class="prompt-label">AI에게 이렇게 부탁해 봐</span><button class="copy" data-copy="3">프롬프트 복사</button></div>
+          <div class="prompt smallprompt" data-prompt="3">웹브라우저에서 실행되는 반응속도 테스트 게임을 만들어 줘.
+1. 시작하면 1.5~3.5초 뒤 화면이 초록색으로 바뀌어.
+2. 초록색으로 바뀌는 순간 클릭하거나 터치하면 반응 시간을 밀리초(ms)로 기록해.
+3. 총 5회 측정하고 최고기록과 평균기록을 보여 줘.
+4. 너무 빨리 누르면 그 회차를 다시 측정하게 해 줘.
+5. 스마트폰에서도 잘 작동하고, HTML 파일 하나로 만들어 줘.</div>
+          <div class="hint">반응속도는 <strong>숫자가 작을수록</strong> 빠른 거야. 1초 = 1,000ms</div>
+        </div>
+        <div class="demo" id="reaction-demo">
+          <div class="demo-head"><span class="demo-title">⚡ 반응속도 실험실</span><span class="chip green" id="r-round">0 / 5회</span></div>
+          <div class="stats"><div class="stat"><strong id="r-last">—</strong><span>최근 기록(ms)</span></div><div class="stat"><strong id="r-best">—</strong><span>최고기록(ms)</span></div><div class="stat"><strong id="r-avg">—</strong><span>평균기록(ms)</span></div></div>
+          <div class="reaction-area" id="r-area" role="button" tabindex="0" aria-label="반응속도 테스트 클릭 영역"><div class="signal" id="r-signal">준비되었나요?</div><div class="signal-sub" id="r-sub">시작 버튼을 눌러 주세요.</div></div>
+          <div class="aim-hud"><button class="game-btn" id="r-start">테스트 시작</button><span class="game-status" id="r-status" aria-live="polite">5번 도전해 보자!</span></div>
+          <div class="trial-list" id="r-trials"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="slide" data-title="게임 2 · 에임 훈련">
+    <div class="slide-inner">
+      <div class="eyebrow">09 · 직접 체험 · 게임 예시 2</div>
+      <h2>🎯 에임(Aim) 훈련 <span class="gold">30초</span></h2>
+      <div class="split-50">
+        <div class="copy-block">
+          <div class="prompt-head"><span class="prompt-label">AI에게 이렇게 부탁해 봐</span><button class="copy" data-copy="4">프롬프트 복사</button></div>
+          <div class="prompt smallprompt" data-prompt="4">초보자도 할 수 있는 에임 훈련 게임을 만들어 줘.
+1. 게임 시간은 30초야.
+2. 화면 안에 지름 80px 정도의 동그란 표적이 한 개 나타나.
+3. 표적을 누를 때마다 점수가 1점 올라가고 다른 위치에 새 표적이 나타나.
+4. 빈 곳을 누르면 빗나간 횟수로 기록해.
+5. 종료 후 맞힌 개수와 명중률을 보여 주고 다시 시작할 수 있게 해 줘.
+6. 마우스와 스마트폰 터치 모두 지원하는 HTML 파일 하나로 만들어 줘.</div>
+          <div class="hint">명중률 = 맞힌 횟수 ÷ 전체 클릭 횟수 × 100 (%)</div>
+        </div>
+        <div class="demo" id="aim-demo">
+          <div class="demo-head"><span class="demo-title">🎯 표적 맞히기</span><span class="chip green">일반인 난이도</span></div>
+          <div class="stats"><div class="stat"><strong id="a-time">30.0</strong><span>남은 시간(초)</span></div><div class="stat"><strong id="a-score">0</strong><span>명중</span></div><div class="stat"><strong id="a-accuracy">—</strong><span>명중률(%)</span></div></div>
+          <div class="aim-area" id="a-area"><button type="button" class="target" id="a-target" aria-label="표적 맞히기"></button><div class="aim-overlay" id="a-overlay">준비되면 시작 버튼을 눌러 봐!</div></div>
+          <div class="aim-hud"><button class="game-btn" id="a-start">30초 시작</button><span class="game-status" id="a-status" aria-live="polite">표적을 빠르게 눌러 보자!</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="slide" data-title="내 게임 업그레이드하기">
+    <div class="slide-inner">
+      <div class="eyebrow">10 · AI에게 수정 요청하기</div>
+      <h2>이제 <span class="purple">나만의 게임</span>으로 바꿔 봐!</h2>
+      <p class="lead">하나를 선택하고 바로 <strong>프롬프트를 복사</strong>해 보자.</p>
+      <div class="grid2">
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">🎨 디자인 변경</span><button class="copy" data-copy="5">복사</button></div><div class="prompt smallprompt" data-prompt="5">게임의 배경은 짙은 남색으로, 버튼은 밝은 민트색으로 바꿔 줘. 글씨는 지금보다 20% 크게 해 줘.</div></div>
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">🔊 효과 넣기</span><button class="copy" data-copy="6">복사</button></div><div class="prompt smallprompt" data-prompt="6">표적을 맞히면 짧은 효과음이 나게 하고, 점수가 10점 올라갈 때마다 축하 메시지를 1초 동안 띄워 줘.</div></div>
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">🏅 기록 비교</span><button class="copy" data-copy="7">복사</button></div><div class="prompt smallprompt" data-prompt="7">게임이 끝나면 이번 기록과 이전 최고기록을 비교해 줘. 브라우저에 최고기록을 저장해 새로고침해도 유지되게 해 줘.</div></div>
+        <div class="card copy-block"><div class="prompt-head"><span class="chip">📱 모바일 개선</span><button class="copy" data-copy="8">복사</button></div><div class="prompt smallprompt" data-prompt="8">휴대전화에서도 화면 밖으로 내용이 넘치지 않게 만들어 줘. 버튼은 손가락으로 누르기 편하게 최소 48px 높이로 해 줘.</div></div>
+      </div>
+    </div>
+  </section>
+  <section class="slide" data-title="만든 게임 공유하기">
+    <div class="slide-inner">
+      <div class="eyebrow">11 · 완성하고 공유하기</div>
+      <h2>내가 만든 게임을 <span class="accent">친구에게!</span></h2>
+      <div class="grid3">
+        <div class="card"><div class="stepnum">1</div><h3>저장하기</h3><p>AI가 작성한 코드를 <strong>game.html</strong>로 저장해.</p></div>
+        <div class="card"><div class="stepnum">2</div><h3>확인하기</h3><p>크롬에서 파일을 열어 작동하는지 직접 테스트해.</p></div>
+        <div class="card"><div class="stepnum">3</div><h3>공유하기</h3><p>GitHub Pages 같은 웹 게시 서비스를 이용해 <strong>링크</strong>로 공유해.</p></div>
+      </div>
+      <div class="hint">주의! <strong>내 컴퓨터 안의 파일 주소</strong>는 다른 친구가 바로 열 수 없어. 인터넷에 게시하거나 파일 자체를 전달해야 해.</div>
+      <p class="lead" style="margin-top:23px">링크를 <strong>QR 코드</strong>로 바꾸면 스마트폰으로도 간편하게 체험할 수 있어.</p>
+    </div>
+  </section>
+  <section class="slide" data-title="오늘의 만들기 미션">
+    <div class="slide-inner">
+      <div class="eyebrow">12 · 오늘의 미션</div>
+      <h2>나만의 아이디어를 <span class="accent">실행</span>해 보자!</h2>
+      <div class="grid3">
+        <div class="card"><div class="iconbig">🎮</div><h3>1단계 · 고르기</h3><p>반응속도 테스트나 에임 훈련 중 한 게임을 고르기</p></div>
+        <div class="card"><div class="iconbig">💬</div><h3>2단계 · 만들기</h3><p>프롬프트를 AI에게 보내고 게임을 직접 실행하기</p></div>
+        <div class="card"><div class="iconbig">✨</div><h3>3단계 · 꾸미기</h3><p>규칙이나 디자인 한 가지를 바꾸고 친구에게 공유하기</p></div>
+      </div>
+      <div style="margin-top:28px" class="card em"><h3>기억할 세 가지</h3><div class="check"><b>①</b><span>원하는 것을 <strong>명확하고 구체적으로!</strong></span></div><div class="check"><b>②</b><span><strong>숫자</strong>를 넣으면 더 정확하게!</span></div><div class="check"><b>③</b><span><strong>실행해 보고</strong> 다시 고치기!</span></div></div>
+    </div>
+  </section>
+  <div class="toc-panel" id="toc"><h2>슬라이드 목차</h2><div class="toc-list" id="toc-list"></div></div>
+  <nav class="nav" aria-label="슬라이드 이동">
+    <span class="brand">✳ VIBE CODING CLASS</span>
+    <button type="button" class="mini" id="toc-btn" aria-label="목차 열기">☰ 목차</button>
+    <span class="spacer"></span><span class="counter" id="counter">01 / 13</span>
+    <button type="button" id="prev" aria-label="이전 슬라이드">← 이전</button>
+    <button type="button" class="primary" id="next" aria-label="다음 슬라이드">다음 →</button>
+    <button type="button" class="mini" id="fullscreen" aria-label="전체 화면 전환">⛶</button>
+  </nav>
+</main>
+<script>
+(()=>{'use strict';
+ const slides=[...document.querySelectorAll('.slide')];let current=0;
+ const progress=document.getElementById('progress'),counter=document.getElementById('counter'),prev=document.getElementById('prev'),next=document.getElementById('next');
+ const toc=document.getElementById('toc');
+ const list=document.getElementById('toc-list');
+ slides.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=`<span>${String(i+1).padStart(2,'0')}</span>${s.dataset.title}`;b.addEventListener('click',()=>{toc.classList.remove('open');show(i)});list.append(b)});
+ function show(i){current=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,idx)=>{s.classList.toggle('active',idx===current);if(idx===current)s.scrollTop=0});progress.style.width=(current+1)/slides.length*100+'%';counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');prev.disabled=current===0;next.disabled=current===slides.length-1;next.textContent=current===slides.length-1?'끝!':'다음 →';}
+ prev.addEventListener('click',()=>show(current-1));next.addEventListener('click',()=>show(current+1));document.getElementById('toc-btn').addEventListener('click',()=>toc.classList.toggle('open'));
+ document.getElementById('fullscreen').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.().catch(()=>{});else document.exitFullscreen?.().catch(()=>{})});
+ document.addEventListener('keydown',e=>{if(e.target.matches('button,input,textarea,[contenteditable]'))return;if(toc.classList.contains('open')){if(e.key==='Escape')toc.classList.remove('open');return}if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();show(current+1)}else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(current-1)}});
+ document.querySelectorAll('[data-copy]').forEach(b=>{b.addEventListener('click',async()=>{const source=document.querySelector(`[data-prompt="${b.dataset.copy}"]`);if(!source)return;const content=source.textContent.trim();try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(content);else{const ta=document.createElement('textarea');ta.value=content;ta.style.position='fixed';ta.style.left='-9999px';document.body.append(ta);ta.select();if(!document.execCommand('copy'))throw Error('복사 불가');ta.remove()}const original=b.textContent;b.textContent='✓ 복사 완료';setTimeout(()=>b.textContent=original,1700)}catch(err){b.textContent='직접 선택해서 복사';setTimeout(()=>b.textContent='복사',2400)}})});
+ show(0);
+ // 반응속도 게임: 정확한 5회, 기다리는 동안 누르면 해당 회차 재측정.
+ const r={state:'idle',records:[],timer:null,readyAt:0};const $=id=>document.getElementById(id);
+ function rPaint(title,sub,mode){$('r-area').className='reaction-area'+(mode?' '+mode:'');$('r-signal').textContent=title;$('r-sub').textContent=sub}
+ function rStats(){const n=r.records.length;$('r-round').textContent=n+' / 5회';$('r-last').textContent=n?r.records[n-1]:'—';$('r-best').textContent=n?Math.min(...r.records):'—';$('r-avg').textContent=n?Math.round(r.records.reduce((a,b)=>a+b,0)/n):'—';$('r-trials').innerHTML='';r.records.forEach((v,i)=>{const chip=document.createElement('span');chip.className='trial';chip.textContent=(i+1)+'회 '+v+'ms';$('r-trials').append(chip)})}
+ function rWait(){clearTimeout(r.timer);r.state='waiting';rPaint('빨간색! 기다려...','초록색으로 바뀌면 바로 클릭','waiting');$('r-start').disabled=true;$('r-status').textContent=(r.records.length+1)+'회차 준비 중';const wait=1500+Math.random()*2000;r.timer=setTimeout(()=>{r.state='ready';r.readyAt=performance.now();rPaint('🟢 지금 눌러!','빠르게 클릭 또는 터치','ready');$('r-status').textContent='지금!'},wait)}
+ function rStart(){clearTimeout(r.timer);if(r.state==='idle'||r.state==='done'){r.records=[];rStats()}rWait()}
+ $('r-start').addEventListener('click',rStart);
+ function rPress(){if(r.state==='waiting'){clearTimeout(r.timer);r.state='early';rPaint('⚠️ 너무 빨랐어!','이번 회차는 기록되지 않아. 다시 시작해 줘.','hit');$('r-start').disabled=false;$('r-start').textContent='다시 준비';$('r-status').textContent='조금만 기다렸다가 클릭!';return}if(r.state!=='ready')return;const elapsed=Math.max(1,Math.round(performance.now()-r.readyAt));r.records.push(elapsed);rStats();r.state=r.records.length===5?'done':'between';rPaint(elapsed+' ms',r.state==='done'?'5회 완료! 최고기록과 평균을 확인해!':'좋아! 다음 회차로 넘어가자.','hit');$('r-status').textContent=r.state==='done'?'🎉 측정 완료!':'기록 성공!';$('r-start').disabled=false;$('r-start').textContent=r.state==='done'?'다시 테스트':'다음 측정'}
+ $('r-area').addEventListener('click',rPress);$('r-area').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();rPress()}});
+ // 에임 훈련: 30초, 클릭/터치 공통, 반응형 표적 배치.
+ const a={running:false,score:0,misses:0,endAt:0,clock:null};
+ function aStats(){const attempts=a.score+a.misses;$('a-score').textContent=a.score;$('a-accuracy').textContent=attempts?Math.round(a.score/attempts*100):'—'}
+ function aPlace(){const board=$('a-area'),target=$('a-target');const sz=Math.min(80,Math.max(58,Math.floor(board.clientWidth*.17)));target.style.width=sz+'px';target.style.height=sz+'px';let w=Math.max(0,board.clientWidth-sz-16),h=Math.max(0,board.clientHeight-sz-16);target.style.left=8+Math.floor(Math.random()*w)+'px';target.style.top=8+Math.floor(Math.random()*h)+'px';target.style.display='flex'}
+ function aEnd(){if(!a.running)return;a.running=false;clearInterval(a.clock);a.clock=null;$('a-time').textContent='0.0';$('a-target').style.display='none';$('a-overlay').style.display='grid';$('a-overlay').textContent='종료! '+a.score+'개 명중 🎉';$('a-start').textContent='다시 도전';$('a-start').disabled=false;$('a-status').textContent='최종 명중률 '+(a.score+a.misses?Math.round(100*a.score/(a.score+a.misses)):0)+'%'}
+ function aTick(){if(!a.running)return;const rem=Math.max(0,(a.endAt-performance.now())/1000);$('a-time').textContent=rem.toFixed(1);if(rem<=0)aEnd()}
+ $('a-start').addEventListener('click',()=>{clearInterval(a.clock);a.score=0;a.misses=0;a.running=true;a.endAt=performance.now()+30000;aStats();$('a-time').textContent='30.0';$('a-overlay').style.display='none';$('a-start').disabled=true;$('a-status').textContent='표적을 눌러!';aPlace();a.clock=setInterval(aTick,40)});
+ $('a-target').addEventListener('pointerdown',e=>{if(!a.running)return;e.stopPropagation();aTick();if(!a.running)return;a.score++;aStats();aPlace()});
+ $('a-area').addEventListener('pointerdown',e=>{if(!a.running||e.target===$('a-target'))return;aTick();if(!a.running)return;a.misses++;aStats()});
+ window.addEventListener('resize',()=>{if(a.running)aPlace()});
+})();
+</script>
+</body></html>
